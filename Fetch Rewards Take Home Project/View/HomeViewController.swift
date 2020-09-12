@@ -21,7 +21,6 @@ class HomeViewController: UIViewController {
                 self?.tableView.reloadData()
 
             }
-            print("HOMEVC VIEWMODEL APPLICANTS", self?.viewModel.applicants)
         }
     }
 }

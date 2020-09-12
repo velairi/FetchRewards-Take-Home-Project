@@ -14,27 +14,23 @@ class ViewModel {
 
     func fetchData(completion: @escaping () -> Void) {
         //populate applicants
-        Client.fetchData() { (applicants) in
-            self.applicants = applicants
+        Client.fetchData() { (applicants1) in
+            self.applicants = applicants1
+            self.removeApplicantsWithEmptyNames()
             self.sortByListID()
             completion()
         }
     }
 
+    func removeApplicantsWithEmptyNames() {
+        applicants = applicants.filter { $0.name?.isEmpty == false && $0.name != nil }
+    }
+
     func sortByListID() {
-        //check if this works
         applicants.sort { $0.listId < $1.listId }
     }
 
-    func sortByName() {
-        //if name is nil, then don't use
-        //after "Item", and the digit is smaller, then
-        var names = [String]()
-        for applicant in applicants {
-            if let name = applicant.name {
-                names.append(name)
-            }
-        }
-        names.sort { $0 < $1 }
+    func sortListIdByName() {
+
     }
 }
