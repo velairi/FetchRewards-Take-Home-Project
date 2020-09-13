@@ -13,11 +13,10 @@ class ViewModel {
     var applicants = [Applicant]()
 
     func fetchData(completion: @escaping () -> Void) {
-        //populate applicants
         Client.fetchData() { (applicants1) in
             self.applicants = applicants1
             self.removeApplicantsWithEmptyNames()
-            self.sortByListID()
+            self.sortListIdByName()
             completion()
         }
     }
@@ -26,11 +25,12 @@ class ViewModel {
         applicants = applicants.filter { $0.name?.isEmpty == false && $0.name != nil }
     }
 
-    func sortByListID() {
-        applicants.sort { $0.listId < $1.listId }
+    func concatenateListIdName(_ applicant: Applicant) -> String {
+        guard let name = applicant.name else { return "" }
+        return "\(String(applicant.listId) + name)"
     }
 
     func sortListIdByName() {
-
+        applicants = applicants.sorted { concatenateListIdName($0).compare(concatenateListIdName($1), options: .numeric) == .orderedAscending }
     }
 }
