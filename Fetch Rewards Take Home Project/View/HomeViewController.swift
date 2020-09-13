@@ -33,7 +33,11 @@ extension HomeViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = "\(viewModel.applicants[indexPath.row].listId),  \(viewModel.applicants[indexPath.row].name)"
+        cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.lineBreakMode = .byWordWrapping
+        let name = viewModel.applicants[indexPath.row].name ?? ""
+        let listId = viewModel.applicants[indexPath.row].listId
+        cell.textLabel?.text = "\(listId): " + name
         return cell
     }
 }
